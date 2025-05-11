@@ -1,25 +1,27 @@
+import { appealRepository } from './appeal.repository';
+
 export const appealService = {
-  getAppeals: () => {
-    return { appeals: 'all' };
+  createAppeal: (title: string, message: string) => {
+    return appealRepository.create({ title, message });
   },
 
-  createAppeal: (topic: string, message: string) => {
-    return { message: message };
+  startProcessing: (id: number) => {
+    return appealRepository.updateStatus(id, 'IN_PROGRESS');
   },
 
-  startProcessing: (id: string) => {
-    return { id: id };
+  completeAppeal: (id: number, resolution: string) => {
+    return appealRepository.complete(id, resolution);
   },
 
-  completeAppeal: (id: string, resolution: string) => {
-    return { res: resolution };
+  cancelAppeal: (id: number, reason: string) => {
+    return appealRepository.cancel(id, reason);
   },
 
-  cancelAppeal: (id: string, reason: string) => {
-    return { res: reason };
+  getAppeals: (filters: { date?: string; from?: string; to?: string }) => {
+    return appealRepository.findAll(filters);
   },
 
   cancelAllInProgress: () => {
-    return { message: 'canseled' };
+    return appealRepository.cancelAllInProgress();
   },
 };
