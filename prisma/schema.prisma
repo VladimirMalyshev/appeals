@@ -13,3 +13,21 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Appeal {
+  id        Int       @id @default(autoincrement())
+  title     String
+  message   String
+  status    Status    @default(NEW)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  resolution String?
+  cancellationReason String? 
+}
+
+enum Status {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
