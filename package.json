@@ -1,0 +1,40 @@
+{
+  "name": "appeals",
+  "version": "1.0.0",
+  "description": "service for operations with appeals powered by express and prisma",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "npx prisma generate --schema=./prisma/schema.prisma",
+    "prisma:migrate": "npx prisma migrate deploy --schema=./prisma/schema.prisma",
+    "prisma:dev": "npx prisma migrate dev --name init --schema=./prisma/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "class-validator": "^0.14.2",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.5.3",
+    "prisma": "^6.7.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
