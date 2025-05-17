@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Request, Response } from 'express';
 import { appealService } from './appeal.service';
 import {
@@ -7,7 +8,6 @@ import {
   CreateAppealDto,
 } from './dto/appeal.dto';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export const getAppeals = async (req: Request<{}, {}, {}, AppealQueryParamsDTO>, res: Response) => {
   const { date, from, to } = req.query;
   const results = await appealService.getAppeals({
@@ -25,19 +25,40 @@ export const createAppeal = async (req: Request<{}, {}, CreateAppealDto, {}>, re
 };
 
 export const startProcessing = async (req: Request, res: Response) => {
-  const result = await appealService.startProcessing(parseInt(req.params.id));
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
+  const result = await appealService.startProcessing(id);
   res.json(result);
 };
 
-export const completeAppeal = async (req: Request<{}, {}, CompleteAppealDto, {}>, res: Response) => {
+export const completeAppeal = async (
+  req: Request<{ id: string }, {}, CompleteAppealDto, {}>,
+  res: Response
+) => {
   const { resolution } = req.body;
-  const result = await appealService.completeAppeal(req.params.id, resolution);
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
+  const result = await appealService.completeAppeal(id, resolution);
   res.json(result);
 };
 
-export const cancelAppeal = async (req: Request<{}, {}, CancelAppealDto, {}>, res: Response) => {
+export const cancelAppeal = async (
+  req: Request<{ id: string }, {}, CancelAppealDto, {}>,
+  res: Response
+) => {
   const { reason } = req.body;
-  const result = await appealService.cancelAppeal(req.params.id, reason);
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
+  const result = await appealService.cancelAppeal(id, reason);
   res.json(result);
 };
 

@@ -6,4 +6,4 @@ COPY . .
 RUN npm run prisma:generate
 EXPOSE 4000
 
-CMD [ "sh", "-c", "npm run prisma:dev && npm run start" ]
+CMD [ "sh", "-c", "npm run prisma:migrate && npm run start" ]
