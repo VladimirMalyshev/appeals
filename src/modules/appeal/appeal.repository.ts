@@ -1,6 +1,5 @@
-import { PrismaClient, Status } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Status } from '@prisma/client';
+import prisma from '../../database/prisma/prisma.service';
 
 export const appealRepository = {
   create: ({ title, message }: { title: string; message: string }) => {
