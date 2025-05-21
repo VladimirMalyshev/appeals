@@ -18,7 +18,7 @@ router.patch(
   controller.completeAppeal
 );
 router.patch('/:id/cancel', authenticate, authorize('ADMIN', 'EMPLOYEE'), controller.cancelAppeal);
-router.get('/me', authenticate, authorize('ADMIN', 'CLIENT'), controller.getMyAppeals);
+router.get('/my', authenticate, authorize('ADMIN', 'CLIENT'), controller.getMyAppeals);
 router.post(
   '/cancel-all-in-progress',
   authenticate,
