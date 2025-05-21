@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { authService } from './auth.service';
+import { Role } from '@prisma/client';
 
 export const register = async (req: Request, res: Response) => {
   const { email, password, role, name } = req.body;
-  if (!email || !password || !role) {
+  if (!email || !password || !Object.values(Role).includes(role)) {
     res.status(400).json({ error: 'Missing fields' });
     return;
   }

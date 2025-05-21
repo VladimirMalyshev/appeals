@@ -1,5 +1,15 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+
+export interface AuthenticatedRequest extends Request {
+  user?: string | JwtPayload;
+}
+
+export interface UserPayload {
+  id: string;
+  role: string;
+  name: string;
+}
 
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   const auth = req.headers.authorization;

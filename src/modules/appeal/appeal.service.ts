@@ -1,8 +1,8 @@
 import { appealRepository } from './appeal.repository';
 
 export const appealService = {
-  createAppeal: (title: string, message: string) => {
-    return appealRepository.create({ title, message });
+  createAppeal: (title: string, message: string, userId: number) => {
+    return appealRepository.create({ title, message, userId });
   },
 
   startProcessing: (id: number) => {
