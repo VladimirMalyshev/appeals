@@ -157,7 +157,7 @@ export const apiSwagger = {
   },
 
   '/api/appeals/cancel-all-in-progress': {
-    patch: {
+    post: {
       summary: 'Отменить все обращения в процессе',
       tags: ['Appeals'],
       security: [{ bearerAuth: [] }],
