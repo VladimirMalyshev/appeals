@@ -1,11 +1,10 @@
-import { PrismaClient, Status } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Status } from '@prisma/client';
+import prisma from '../../database/prisma/prisma.service';
 
 export const appealRepository = {
-  create: ({ title, message }: { title: string; message: string }) => {
+  create: ({ title, message, userId }: { title: string; message: string; userId: number }) => {
     return prisma.appeal.create({
-      data: { title, message },
+      data: { title, message, user_id: userId },
     });
   },
 
@@ -36,8 +35,8 @@ export const appealRepository = {
     });
   },
 
-  findAll: (filters: { date?: string; from?: string; to?: string }) => {
-    const { date, from, to } = filters;
+  findAll: (filters: { date?: string; from?: string; to?: string; userId?: number }) => {
+    const { date, from, to, userId } = filters;
     let where = {};
 
     if (date) {
@@ -55,6 +54,10 @@ export const appealRepository = {
           lte: new Date(to),
         },
       };
+    }
+
+    if (userId) {
+      where = { user_id: userId };
     }
 
     return prisma.appeal.findMany({

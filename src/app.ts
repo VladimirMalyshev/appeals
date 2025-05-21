@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { appealSwagger } from '../docs/appeals.swagger';
+import { apiSwagger } from '../docs/appeals.swagger';
 
 import router from './routes';
 
@@ -18,8 +18,22 @@ const swaggerDefinition = {
     title: 'Appeals API',
     version: '1.0.0',
   },
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
   paths: {
-    ...appealSwagger,
+    ...apiSwagger,
   },
 };
 
