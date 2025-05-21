@@ -1,8 +1,9 @@
-export const appealSwagger = {
+export const apiSwagger = {
   '/api/appeals': {
     get: {
       summary: 'Получить список обращений',
       tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
       parameters: [
         {
           in: 'query',
@@ -32,6 +33,7 @@ export const appealSwagger = {
     post: {
       summary: 'Создать обращение',
       tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
       requestBody: {
         required: true,
         content: {
@@ -53,10 +55,24 @@ export const appealSwagger = {
       },
     },
   },
+
+  '/api/appeals/my': {
+    get: {
+      summary: 'Получить обращения текущего пользователя',
+      tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
+      responses: {
+        200: { description: 'Список обращений пользователя' },
+        401: { description: 'Пользователь не авторизован' },
+      },
+    },
+  },
+
   '/api/appeals/{id}/start': {
     patch: {
       summary: 'Начать обработку обращения',
       tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
       parameters: [
         {
           in: 'path',
@@ -71,10 +87,12 @@ export const appealSwagger = {
       },
     },
   },
+
   '/api/appeals/{id}/complete': {
     patch: {
       summary: 'Завершить обращение',
       tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
       parameters: [
         {
           in: 'path',
@@ -103,10 +121,12 @@ export const appealSwagger = {
       },
     },
   },
+
   '/api/appeals/{id}/cancel': {
     patch: {
       summary: 'Отменить обращение',
       tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
       parameters: [
         {
           in: 'path',
@@ -135,12 +155,105 @@ export const appealSwagger = {
       },
     },
   },
+
   '/api/appeals/cancel-in-progress': {
     patch: {
       summary: 'Отменить все обращения в процессе',
       tags: ['Appeals'],
+      security: [{ bearerAuth: [] }],
       responses: {
         200: { description: 'Все обращения в процессе отменены' },
+      },
+    },
+  },
+
+  '/api/auth/register': {
+    post: {
+      summary: 'Регистрация пользователя',
+      tags: ['Auth'],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                email: { type: 'string', format: 'email' },
+                password: { type: 'string' },
+                role: { type: 'string' },
+                name: { type: 'string' },
+              },
+              required: ['email', 'password', 'role', 'name'],
+            },
+          },
+        },
+      },
+      responses: {
+        201: { description: 'Пользователь зарегистрирован' },
+        400: { description: 'Ошибка валидации' },
+      },
+    },
+  },
+
+  '/api/auth/login': {
+    post: {
+      summary: 'Авторизация пользователя',
+      tags: ['Auth'],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                email: { type: 'string' },
+                password: { type: 'string' },
+              },
+              required: ['email', 'password'],
+            },
+          },
+        },
+      },
+      responses: {
+        200: { description: 'Успешный вход' },
+        400: { description: 'Неверные данные' },
+      },
+    },
+  },
+
+  '/api/auth/refresh': {
+    post: {
+      summary: 'Обновить access токен',
+      tags: ['Auth'],
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                refreshToken: { type: 'string' },
+              },
+              required: ['refreshToken'],
+            },
+          },
+        },
+      },
+      responses: {
+        200: { description: 'Токен обновлён' },
+        400: { description: 'Не передан refreshToken' },
+      },
+    },
+  },
+
+  '/api/auth/logout': {
+    post: {
+      summary: 'Выход пользователя',
+      tags: ['Auth'],
+      security: [{ bearerAuth: [] }],
+      responses: {
+        204: { description: 'Выход выполнен' },
+        401: { description: 'Пользователь не авторизован' },
       },
     },
   },
