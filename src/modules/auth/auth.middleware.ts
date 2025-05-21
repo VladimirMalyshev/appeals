@@ -11,7 +11,11 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   const token = auth.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number; role: string };
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET!) as {
+      id: number;
+      role: string;
+      name: string;
+    };
     (req as any).user = decoded;
     next();
   } catch {
