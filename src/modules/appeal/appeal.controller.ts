@@ -24,6 +24,12 @@ export const getAppeals = async (req: Request, res: Response) => {
   res.json(results);
 };
 
+export const getMyAppeals = async (req: AuthenticatedRequest, res: Response) => {
+  const user = req.user as UserPayload;
+  const results = await appealService.getAppeals({ userId: parseInt(user.id) });
+  res.json(results);
+};
+
 export const createAppeal = async (req: AuthenticatedRequest, res: Response) => {
   const { title, message } = req.body;
   if (typeof title !== 'string' || title.trim() === '') {

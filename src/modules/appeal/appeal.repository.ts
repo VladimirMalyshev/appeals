@@ -35,8 +35,8 @@ export const appealRepository = {
     });
   },
 
-  findAll: (filters: { date?: string; from?: string; to?: string }) => {
-    const { date, from, to } = filters;
+  findAll: (filters: { date?: string; from?: string; to?: string; userId?: number }) => {
+    const { date, from, to, userId } = filters;
     let where = {};
 
     if (date) {
@@ -54,6 +54,10 @@ export const appealRepository = {
           lte: new Date(to),
         },
       };
+    }
+
+    if (userId) {
+      where = { user_id: userId };
     }
 
     return prisma.appeal.findMany({

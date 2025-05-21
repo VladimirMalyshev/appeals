@@ -17,7 +17,7 @@ export const appealService = {
     return appealRepository.cancel(id, reason);
   },
 
-  getAppeals: (filters: { date?: string; from?: string; to?: string }) => {
+  getAppeals: (filters: { date?: string; from?: string; to?: string; userId?: number }) => {
     return appealRepository.findAll(filters);
   },
 
